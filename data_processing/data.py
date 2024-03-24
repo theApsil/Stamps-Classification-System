@@ -36,22 +36,3 @@ def fix_data_ranges(item):
             return item[0]
 
     return item
-
-
-# Пример использования функции
-file_path = 'data_knowledge.json'
-json_data = read_json_file(file_path)
-
-classes_info = json_data.get("Классы")
-
-if classes_info:
-    # Печатаем информацию о каждом классе
-    for class_name, class_data in classes_info.items():
-        print(f"Класс: {class_name}")
-        for attribute, value in class_data.items():
-            value = fix_data_ranges(value)
-            print(f"{attribute}: {value}")
-        print()
-else:
-    print("Не найдена информация о классах.")
-

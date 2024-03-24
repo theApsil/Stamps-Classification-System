@@ -11,4 +11,3 @@ class Stamp:
         self.perforation = perforation
         self.marking = marking
         self.circulation = circulation
-
