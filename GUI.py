@@ -19,7 +19,6 @@ def get_combobox_values(data_type: str, input_types) -> set:
     return values
 
 
-
 class App:
     def __init__(self, root):
         self.root = root
@@ -123,8 +122,6 @@ class App:
         classes = json_data.get("Классы", {}).get("Стандартные")
         data_types = read_json_file('datatypes.json').get("Базовые типы данных")
 
-
-
         tree = ttk.Treeview(new_root, columns=("Data Type", "Value"))
         tree.heading("#0", text="Признак")
         tree.heading("Data Type", text="Тип данных")
@@ -141,7 +138,64 @@ class App:
         exit()
 
     def GButton_161_command(self):
-        print("command")
+        self.root.withdraw()
+        new_root = tk.Tk()
+        new_root.title("Редактирование базы знаний")
+        width = 700
+        height = 500
+        screenwidth = new_root.winfo_screenwidth()
+        screenheight = new_root.winfo_screenheight()
+        alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
+        new_root.geometry(alignstr)
+        new_root.resizable(width=True, height=True)
+
+        label = tk.Label(new_root, text="Редактирование базы знаний", font=("Arial", 20, 'bold'))
+        label.pack(pady=20)
+
+        label = tk.Label(new_root, text='Выберите раздел редактирования', font=("Arial", 20))
+        label.pack(pady=20)
+        def go_back():
+            new_root.destroy()
+            self.root.deiconify()
+
+        back_button = tk.Button(new_root, command=go_back)
+        back_button["bg"] = "#b8b8b8"
+        ft = tkFont.Font(family='Arial', size=22)
+        back_button["font"] = ft
+        back_button["fg"] = "#000000"
+        back_button["justify"] = "center"
+        back_button["text"] = "Назад"
+        back_button.place(x=30, y=450, width=200, height=40)
+
+
+        def update_classes(root):
+            self.root.withdraw()
+            new_root = tk.Tk()
+            new_root.title("Редактирование базы знаний")
+            width = 700
+            height = 500
+            screenwidth = new_root.winfo_screenwidth()
+            screenheight = new_root.winfo_screenheight()
+            alignstr = '%dx%d+%d+%d' % (width, height, (screenwidth - width) / 2, (screenheight - height) / 2)
+            new_root.geometry(alignstr)
+            new_root.resizable(width=True, height=True)
+
+            label = tk.Label(new_root, text="Редактирование базы знаний", font=("Arial", 20, 'bold'))
+            label.pack(pady=20)
+
+        BUpdateClasses = tk.Button(new_root, command=update_classes(new_root))
+        BUpdateClasses["activebackground"] = "#ffebcd"
+        BUpdateClasses["bg"] = "#ffebcd"
+        ft = tkFont.Font(family='Arial', size=18)
+        BUpdateClasses["font"] = ft
+        BUpdateClasses["fg"] = "#000000"
+        BUpdateClasses["justify"] = "center"
+        BUpdateClasses["text"] = "Редактирование классов"
+
+        BUpdateClasses.place(x=230, y=160, width=259, height=73)
+
+
+        new_root().mainloop()
 
 
 if __name__ == "__main__":
