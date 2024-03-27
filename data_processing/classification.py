@@ -83,14 +83,14 @@ def classify(year: int, sort: str, place: str, nominal: str, size: str, save: st
     return (res_good, res_bad)
 
 
-file_path = ABS_PATH + '\data_knowledge.json'
-json_data = read_json_file(file_path)
-classes_data = read_json_file(ABS_PATH + '\datatypes.json')
-classes_info = json_data.get("Классы")
-
-
-res = classify(2000, "офсетная бумага", "Ближний восток",
-          "Да", "20×27.5", "незначительный дефект", 90.1,
-          "Да", 12, "сильно заметная", "огромный",
-          "Нет", "Нет", "отсутствует",classes_info)
-print(f'{res[0]}\n{res[1]}')
+# file_path = ABS_PATH + '\data_knowledge.json'
+# json_data = read_json_file(file_path)
+# classes_data = read_json_file(ABS_PATH + '\datatypes.json')
+# classes_info = json_data.get("Классы")
+#
+#
+# res = classify(2000, "офсетная бумага", "Ближний восток",
+#           "Да", "20×27.5", "незначительный дефект", 90.1,
+#           "Да", 12, "сильно заметная", "огромный",
+#           "Нет", "Нет", "отсутствует",classes_info)
+# print(f'{res[0]}\n{res[1]}')
