@@ -21,37 +21,37 @@ def classify(year: int, sort: str, place: str, nominal: str, size: str, save: st
                     break
             elif attribute == 'Место выпуска':
                 if place not in value:
-                    res_bad += f'<{class_name} не подходит, так как <{attribute}>: {place}\n'
+                    res_bad += f'<{class_name}> не подходит, так как <{attribute}>: {place}\n'
                     break
             elif attribute == 'Номинал':
                 if isinstance(value, list):
                     if nominal not in value:
-                        res_bad += f'<{class_name} не подходит, так как <{attribute}>: {nominal}\n'
+                        res_bad += f'<{class_name}> не подходит, так как <{attribute}>: {nominal}\n'
                         break
                 elif isinstance(value, str):
                     if nominal != value:
-                        res_bad += f'<{class_name} не подходит, так как <{attribute}>: {nominal}\n'
+                        res_bad += f'<{class_name}> не подходит, так как <{attribute}>: {nominal}\n'
                         break
             elif attribute == 'Размер':
                 if size not in value:
-                    res_bad += f'<{class_name} не подходит, так как <{attribute}>: {size}\n'
+                    res_bad += f'<{class_name}> не подходит, так как <{attribute}>: {size}\n'
                     break
             elif attribute == 'Сохранность':
                 if save not in value:
-                    res_bad += f'<{class_name} не подходит, так как <{attribute}>: {save}\n'
+                    res_bad += f'<{class_name}> не подходит, так как <{attribute}>: {save}\n'
                     break
             elif attribute == 'Выравнивание':
                 if leveling not in value:
-                    res_bad += f'<{class_name} не подходит, так как <{attribute}> ∉ [{value[0]};{value[-1]}]\n'
+                    res_bad += f'<{class_name}> не подходит, так как <{attribute}> ∉ [{value[0]};{value[-1]}]\n'
                     break
             elif attribute == 'Наклейка':
                 if isinstance(value, list):
                     if sticker not in value:
-                        res_bad += f'<{class_name} не подходит, так как <{attribute}>: {sticker}\n'
+                        res_bad += f'<{class_name}> не подходит, так как <{attribute}>: {sticker}\n'
                         break
                 elif isinstance(value, str):
                     if sticker != value:
-                        res_bad += f'<{class_name} не подходит, так как <{attribute}>: {sticker}\n'
+                        res_bad += f'<{class_name}> не подходит, так как <{attribute}>: {sticker}\n'
                         break
             elif attribute == 'Перфорация':
                 if perforation not in value:
@@ -59,26 +59,26 @@ def classify(year: int, sort: str, place: str, nominal: str, size: str, save: st
                     break
             elif attribute == 'Маркировка':
                 if marking not in value:
-                    res_bad += f'<{class_name} не подходит, так как <{attribute}>: {marking}\n'
+                    res_bad += f'<{class_name}> не подходит, так как <{attribute}>: {marking}\n'
                     break
             elif attribute == 'Тираж':
                 if circulation not in value:
-                    res_bad += f'<{class_name} не подходит, так как <{attribute}>: {circulation}\n'
+                    res_bad += f'<{class_name}> не подходит, так как <{attribute}>: {circulation}\n'
                     break
             elif attribute == 'Водяной знак':
                 if water_mark not in value:
-                    res_bad += f'<{class_name} не подходит, так как <{attribute}>: {water_mark}\n'
+                    res_bad += f'<{class_name}> не подходит, так как <{attribute}>: {water_mark}\n'
                     break
             elif attribute == 'История':
                 if history not in value:
-                    res_bad += f'<{class_name} не подходит, так как <{attribute}>: {history}\n'
+                    res_bad += f'<{class_name}> не подходит, так как <{attribute}>: {history}\n'
                     break
             elif attribute == 'История':
                 if issue not in value:
-                    res_bad += f'<{class_name} не подходит, так как <{attribute}>: {issue}\n'
+                    res_bad += f'<{class_name}> не подходит, так как <{attribute}>: {issue}\n'
                     break
             else:
-                res_good += f'<{class_name} подходит по всем параметрам.\n'
+                res_good += f'<{class_name}> подходит по всем параметрам.\n'
 
     return (res_good, res_bad)
 
