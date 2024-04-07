@@ -1,10 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Классификация марок</title>
+    <title>Классификация</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles/classification.css">
 </head>
 <body>
-    <
+    <div class="Container">
+
+        <p class="Title">Система классификации марок</p>
+        <table align="center">
+            <thead>
+                <tr>
+                    <th>Признак</th>
+                    <th>Тип данных</th>
+                    <th>Значение</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Год выпуска</td>
+                    <td>Интервальный</td>
+                    <td><input type="text" name="feature1" placeholder="Введите значение"></td>
+                </tr>
+                <tr>
+                    <td>Сорт бумаги</td>
+                    <td>Качественный</td>
+                    <td><input type="text" name="feature2" placeholder="Введите значение"></td>
+                </tr>
+                <tr>
+                    <td>Место выпуска</td>
+                    <td>Качественный</td>
+                    <td><input type="text" name="feature3" placeholder="Введите значение"></td>
+                </tr>
+                <tr>
+                    <td>Наличие номинала</td>
+                    <td>Логический</td>
+                    <td><input type="text" name="feature4" placeholder="Введите значение"></td>
+                </tr>
+                <tr>
+                    <td>Размер марки</td>
+                    <td>Качественный</td>
+                    <td><input type="text" name="feature5" placeholder="Введите значение"></td>
+                </tr>
+                <tr>
+                    <td>Сохранность</td>
+                    <td>Качественный</td>
+                    <td><input type="text" name="feature6" placeholder="Введите значение"></td>
+                </tr>
+                <tr>
+                    <td>Выравнивание</td>
+                    <td>Интервальный</td>
+                    <td><input type="text" name="feature7" placeholder="Введите значение"></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>Наклейка</td>
+                    <td>Логический</td>
+                    <td><input type="text" name="feature8" placeholder="Введите значение"></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>Перфорация</td>
+                    <td>Интервальный</td>
+                    <td><input type="text" name="feature9" placeholder="Введите значение"></td>
+                </tr>
+                </tr>
+                <tr>
+                    <td>Маркировка</td>
+                    <td>Качественный</td>
+                    <td><input type="text" name="feature10" placeholder="Введите значение"></td>
+                </tr>
+                <tr>
+                    <td>Тираж</td>
+                    <td>Качественный</td>
+                    <td><input type="text" name="feature11" placeholder="Введите значение"></td>
+                </tr>
+                <tr>
+                    <td>Водяной знак</td>
+                    <td>Логический</td>
+                    <td><input type="text" name="feature12" placeholder="Введите значение"></td>
+                </tr>
+                <tr>
+                    <td>Историческое событие</td>
+                    <td>Логический</td>
+                    <td><input type="text" name="feature13" placeholder="Введите значение"></td>
+                </tr>
+                <tr>
+                    <td>Эмитент</td>
+                    <td>Качественный</td>
+                    <td><input type="text" name="feature14" placeholder="Введите значение"></td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="BTN" onclick=""> Классифицировать </button>
+        <div class="InnerContainer">
+            <div class="_Back">
+                <a href='/'>
+                    <button class="Exit"> Назад </button>
+                </a>
+            </div>
+            <div class="_Exit">
+                <a href='/'>
+                    <button class="Exit"> Главное меню </button>
+                </a>
+            </div>
+        </div>
+
+    </div>
 </body>
 </html>

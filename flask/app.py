@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+import os
+
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -7,15 +9,15 @@ app = Flask(__name__)
 def index():
     return render_template("home_page.html")
 
-#
-# @app.route('/window1')
-# def window1():
-#     return render_template('window1.html')
-#
-#
-# @app.route('/window2')
-# def window2():
-#     return render_template('window2.html')
+
+@app.route('/exit')
+def exit():
+    os.kill(os.getpid(), 9)
+    return 'Сервер остановлен'
+
+@app.route('/classification')
+def classification():
+    return render_template("classification.html")
 
 
 if __name__ == '__main__':
