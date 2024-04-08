@@ -3,7 +3,9 @@ import os
 
 
 from flask import Flask, render_template, request
-from data_processing.data import get_combox_values
+
+
+
 app = Flask(__name__)
 
 
@@ -42,8 +44,8 @@ def generate_table_html(data_types):
         elif value == 'Качественный':
             html += '<td>Качественный</td>\n'
             html += '<td><select name="{}">'.format(key.lower().replace(' ', ''))
-            values = get_combox_values(key, '../data_knowledge.json')
-            for item in values:
+            # values = get_combox_values(key, '../data_knowledge.json')
+            for item in range(3):
                 html += '<option value="{}">{}</option>'.format(item, item)
             html += '</select></td>\n'
         html += '</tr>\n'
