@@ -1,5 +1,4 @@
-from data import read_json_file, json
-from classification import ABS_PATH
+import json
 
 
 def add_attribute(attribute, value, json_file, file_path):

@@ -1,10 +1,8 @@
 import json
 import os
 
-
 from flask import Flask, render_template, request
-
-
+from data_processing import get_combox_values
 
 app = Flask(__name__)
 
@@ -29,6 +27,19 @@ def classification():
     return render_template("classification.html", table_html=table_html)
 
 
+@app.route('/classify', methods=['POST'])
+def classify():
+    # Получаем данные из полей формы
+    feature_values = {}
+    for key in request.form:
+        feature_values[key] = request.form[key]
+
+    # Здесь можно выполнить какую-то обработку полученных данных
+
+    # Передаем данные на страницу результатов
+    return render_template("classify.html", feature_values=feature_values)
+
+
 def generate_table_html(data_types):
     html = '<form>'
     html += '<table align="center">\n<thead>\n<tr>\n<th>Признак</th>\n<th>Тип данных</th>\n<th>Значение</th>\n</tr>\n</thead>\n<tbody>\n'
@@ -44,8 +55,11 @@ def generate_table_html(data_types):
         elif value == 'Качественный':
             html += '<td>Качественный</td>\n'
             html += '<td><select name="{}">'.format(key.lower().replace(' ', ''))
-            # values = get_combox_values(key, '../data_knowledge.json')
-            for item in range(3):
+
+            values = get_combox_values(key, '../data_knowledge.json')
+            if key == 'Размер марки':
+                print(values)
+            for item in values:
                 html += '<option value="{}">{}</option>'.format(item, item)
             html += '</select></td>\n'
         html += '</tr>\n'

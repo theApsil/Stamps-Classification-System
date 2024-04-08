@@ -1,4 +1,4 @@
-from data import read_json_file, fix_data_ranges
+from web.data_processing.data import read_json_file, fix_data_ranges
 
 ABS_PATH = '/Stamps-Classification-System'
 
