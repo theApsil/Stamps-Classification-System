@@ -1,6 +1,6 @@
 from data import read_json_file, fix_data_ranges
 
-ABS_PATH = 'D:\Study Projects\Ontology\Stamps-Classification-System'
+ABS_PATH = '/Stamps-Classification-System'
 
 
 def classify(year: int, sort: str, place: str, nominal: str, size: str, save: str, leveling: int,

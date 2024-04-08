@@ -11,6 +11,7 @@ def add_attribute(attribute, value, json_file, file_path):
     with open(file_path, 'w', encoding='windows-1251') as f:
         json.dump(json_file, f, ensure_ascii=False, indent=4)
 
+
 def delete_attribute(attribute, json_file, file_path):
     _temp = json_file.get("Классы")
     for class_name in _temp.keys():

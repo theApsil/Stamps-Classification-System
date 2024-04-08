@@ -4,7 +4,7 @@ import re
 
 def read_json_file(file_path: str) -> json:
     try:
-        with open(file_path, 'r', encoding='utf-8') as file:
+        with open(file_path, 'r') as file:
             data = json.load(file)
         return data
     except FileNotFoundError:
@@ -38,6 +38,19 @@ def fix_data_ranges(item):
     return item
 
 
+def get_combox_values(class_name, file_path):
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+    data = data.get('Классы')
+    values = set()
+    for item in data.keys():
+        for value in data[item]:
+            if value == class_name:
+                for _ in data[item][value]:
+                    values.add(_)
+
+    return values
+
 # # Пример использования функции
 # file_path = 'data_knowledge.json'
 # json_data = read_json_file(file_path)
@@ -54,4 +67,3 @@ def fix_data_ranges(item):
 #         print()
 # else:
 #     print("Не найдена информация о классах.")
-
