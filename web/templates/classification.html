@@ -9,10 +9,15 @@
     <div class="Container">
 
         <p class="Title">Система классификации марок</p>
-        <form id="classification_form" action="/classify" method="POST">
-            {{ table_html }}
-            <button class="BTN" type="submit"> Классифицировать </button>
+        <form name='classify' method="POST">
+            {{ table_html | safe}}
+            <button class="BTN">
+                <a href="/classify" methods="POST">
+                    Классифицировать
+                </a>
+            </button>
         </form>
+
 
         <div class="InnerContainer">
             <div class="_Back">

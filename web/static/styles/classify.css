@@ -12,6 +12,22 @@
     flex-direction: row;
 }
 
+.TextContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #FFFFFA;
+    border: black;
+
+}
+
+.Inner2Container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
 .Title {
     font-weight: bold;
     font-size: 24px;

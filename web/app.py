@@ -1,7 +1,7 @@
 import json
 import os
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from data_processing import get_combox_values
 
 app = Flask(__name__)
@@ -27,17 +27,16 @@ def classification():
     return render_template("classification.html", table_html=table_html)
 
 
-@app.route('/classify', methods=['POST'])
+@app.route('/classify')
 def classify():
-    # Получаем данные из полей формы
-    feature_values = {}
-    for key in request.form:
-        feature_values[key] = request.form[key]
+    return render_template('classify.html')
 
-    # Здесь можно выполнить какую-то обработку полученных данных
 
-    # Передаем данные на страницу результатов
-    return render_template("classify.html", feature_values=feature_values)
+@app.route('/classify', methods=['POST'])
+def classify_post():
+    data_form = request.args.get('form_name')
+    print(data_form)
+    return data_form
 
 
 def generate_table_html(data_types):

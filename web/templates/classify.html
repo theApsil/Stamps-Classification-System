@@ -8,22 +8,26 @@
 <body>
     <div class="Container">
         <p class="Title">Результаты классификации</p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Признак</th>
-                    <th>Значение</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for key, value in feature_values.items() %}
-                    <tr>
-                        <td>{{ key }}</td>
-                        <td>{{ value }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="Inner2Container">
+            <div class="TextContainer">
+                A
+            </div>
+            <div class="TextContainer">
+                B
+            </div>
+        </div>
+        <div class="InnerContainer">
+        <div class="_Back">
+            <a href='/classification'>
+                <button class="Exit"> Назад </button>
+            </a>
+        </div>
+        <div class="_Exit">
+            <a href='/'>
+                <button class="Exit"> Главное меню </button>
+            </a>
+        </div>
+    </div>
     </div>
 </body>
 </html>
