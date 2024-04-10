@@ -53,6 +53,18 @@ def edit_class():
     return render_template('edit_class.html', table_html=table_html)
 
 
+@app.route('/delete_class')
+def delete_class():
+    return render_template('delete_class.html')
+
+
+@app.route('/delete_class', methods=['POST'])
+def delete_class_post():
+    data_form = request.args.get('delete_class')
+    print(data_form)
+    return data_form
+
+
 def generate_class_table(classes):
     html = '<table align="center">\n<thead>\n<tr>\n<th> Классы </th></tr>\n</thead>\n<tbody>\n'
     for key in classes.keys():
