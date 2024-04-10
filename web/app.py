@@ -34,14 +34,35 @@ def classify():
 
 @app.route('/classify', methods=['POST'])
 def classify_post():
-    data_form = request.args.get('form_name')
+    data_form = request.args.get('classify')
     print(data_form)
     return data_form
 
 
+@app.route('/base_editor')
+def base_editor():
+    return render_template('base_editor.html')
+
+
+@app.route('/edit_class')
+def edit_class():
+    with open('../data_knowledge.json', 'r') as file:
+        data = json.load(file)
+    data = data.get('Классы')
+    table_html = generate_class_table(data)
+    return render_template('edit_class.html', table_html=table_html)
+
+
+def generate_class_table(classes):
+    html = '<table align="center">\n<thead>\n<tr>\n<th> Классы </th></tr>\n</thead>\n<tbody>\n'
+    for key in classes.keys():
+        html += '<tr>\n<td>{}</td>\n'.format(key)
+    html += '</tbody>\n</table>\n'
+    return html
+
+
 def generate_table_html(data_types):
-    html = '<form>'
-    html += '<table align="center">\n<thead>\n<tr>\n<th>Признак</th>\n<th>Тип данных</th>\n<th>Значение</th>\n</tr>\n</thead>\n<tbody>\n'
+    html = '<table align="center">\n<thead>\n<tr>\n<th>Признак</th>\n<th>Тип данных</th>\n<th>Значение</th>\n</tr>\n</thead>\n<tbody>\n'
     for key, value in data_types.items():
         html += '<tr>\n<td>{}</td>\n'.format(key)
         if value == 'Интервальный':
@@ -63,7 +84,6 @@ def generate_table_html(data_types):
             html += '</select></td>\n'
         html += '</tr>\n'
     html += '</tbody>\n</table>\n'
-    html += '</form>'
     return html
 
 
