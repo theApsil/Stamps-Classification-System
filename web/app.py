@@ -2,7 +2,7 @@ import json
 import os
 
 from flask import Flask, render_template, request, redirect
-from data_processing import get_combox_values, remove_class_from_json
+from data_processing import get_combox_values, remove_class_from_json, change_class_name
 
 app = Flask(__name__)
 
@@ -20,7 +20,7 @@ def exit():
 
 @app.route('/classification')
 def classification():
-    with open('../datatypes.json', 'r', encoding='utf-8') as file:
+    with open('../datatypes.json', 'r') as file:
         data = json.load(file)
 
     table_html = generate_table_html(data)
@@ -34,14 +34,9 @@ def classify():
 
 @app.route('/classify', methods=['GET', 'POST'])
 def classify_post():
-
     with open('../datatypes.json', 'r') as file:
         data_frame = json.load(file)
-    for key in data_frame.keys():
-        print(key)
-        resp = request.form[(key.lower()).replace(' ', '')]
-        print(resp)
-        break
+
     return render_template('classify.html')
 
 
@@ -74,6 +69,40 @@ def delete_class_post():
     return render_template('delete_class.html', combox=combox)
 
 
+@app.route('/change_class')
+def change_class():
+    combox = generate_class_combox()
+    return render_template('change_class.html', combox=combox)
+
+
+@app.route('/change_class', methods=['GET', 'POST'])
+def change_class_post():
+    class_old = request.form['del_classes']
+    class_new = request.form['new_class_name']
+
+    change_class_name(class_old, class_new, '../data_knowledge.json')
+    combox = generate_class_combox()
+    return render_template('change_class.html', combox=combox)
+
+
+@app.route('/attributes')
+def attributes():
+    combox = generate_class_combox()
+    return render_template('attributes.html', combox=combox)
+
+
+@app.route('/attributes', methods=['GET', 'POST'])
+def attributes_table():
+    _class = request.form['del_classes']
+    table_html = generate_table_from_class(_class)
+    return render_template('attribute_table.html', table_html=table_html)
+
+
+@app.route('/change_attr_values')
+def change_attr_values():
+    return render_template('change_attr_values.html')
+
+
 def generate_class_combox():
     with open('../data_knowledge.json', 'r') as file:
         data = json.load(file)
@@ -84,6 +113,25 @@ def generate_class_combox():
     html += '</select>\n'
 
     return html
+
+
+def generate_table_from_class(class_name):
+    with open('../data_knowledge.json', 'r') as file:
+        data_class = json.load(file)
+    data_class = data_class.get('Классы').get(class_name)
+
+    with open('../datatypes.json', 'r') as f:
+        data_info = json.load(f)
+    html_table = "<table>\n<tr>\n<th>Признак</th>\n<th>Тип данных</th>\n<th>Значение</th>\n</tr>\n"
+
+    for feature, data_type in data_info.items():
+        for key, value in data_class.items():
+            if feature == key:
+                html_table += f"<tr>\n<td>{feature}</td>\n<td>{data_type}</td>\n<td>{value}</td>\n</tr>\n"
+
+    html_table += "</table>"
+
+    return html_table
 
 
 def generate_class_table(classes):

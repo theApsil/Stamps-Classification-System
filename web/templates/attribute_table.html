@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Признаки класса</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles/classification.css">
+</head>
+<body>
+    <div class="Container">
+            {{ table_html | safe }}
+            <a href='/change_attr_values'>
+                    <button class="BTN"> Редактировать признаки </button>
+                </a>
+        <div class="InnerContainer">
+            <div class="_Back">
+                <a href='/attributes'>
+                    <button class="Exit"> Назад </button>
+                </a>
+            </div>
+            <div class="_Exit">
+                <a href='/'>
+                    <button class="Exit"> Главное меню </button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
