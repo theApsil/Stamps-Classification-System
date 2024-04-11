@@ -9,12 +9,10 @@
     <div class="Container">
 
         <p class="Title">Система классификации марок</p>
-        <form name='classify' method="POST">
+        <form action="/classify" method="post" name="classify">
             {{ table_html | safe}}
-            <button class="BTN">
-                <a href="/classify" methods="POST">
+            <button type="submit" class="BTN">
                     Классифицировать
-                </a>
             </button>
         </form>
 

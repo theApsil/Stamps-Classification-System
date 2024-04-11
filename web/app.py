@@ -2,7 +2,7 @@ import json
 import os
 
 from flask import Flask, render_template, request, redirect
-from data_processing import get_combox_values
+from data_processing import get_combox_values, remove_class_from_json
 
 app = Flask(__name__)
 
@@ -32,11 +32,17 @@ def classify():
     return render_template('classify.html')
 
 
-@app.route('/classify', methods=['POST'])
+@app.route('/classify', methods=['GET', 'POST'])
 def classify_post():
-    data_form = request.args.get('classify')
-    print(data_form)
-    return data_form
+
+    with open('../datatypes.json', 'r') as file:
+        data_frame = json.load(file)
+    for key in data_frame.keys():
+        print(key)
+        resp = request.form[(key.lower()).replace(' ', '')]
+        print(resp)
+        break
+    return render_template('classify.html')
 
 
 @app.route('/base_editor')
@@ -55,14 +61,29 @@ def edit_class():
 
 @app.route('/delete_class')
 def delete_class():
-    return render_template('delete_class.html')
+    combox = generate_class_combox()
+    return render_template('delete_class.html', combox=combox)
 
 
-@app.route('/delete_class', methods=['POST'])
+@app.route('/delete_class', methods=['GET', 'POST'])
 def delete_class_post():
-    data_form = request.args.get('delete_class')
-    print(data_form)
-    return data_form
+    del_classes = request.form['del_classes']
+    print(del_classes)
+    remove_class_from_json(del_classes, '../data_knowledge.json')
+    combox = generate_class_combox()
+    return render_template('delete_class.html', combox=combox)
+
+
+def generate_class_combox():
+    with open('../data_knowledge.json', 'r') as file:
+        data = json.load(file)
+    data = data.get('Классы')
+    html = '<select name="del_classes">\n'
+    for key in data.keys():
+        html += '<option value="{}">{}</option>\n'.format(key, key)
+    html += '</select>\n'
+
+    return html
 
 
 def generate_class_table(classes):

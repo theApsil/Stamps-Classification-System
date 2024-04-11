@@ -25,3 +25,5 @@ def change_attribute_value(class_name, attribute, value, json_file, file_path):
     json_file.get("Классы")[class_name][attribute] = value
     with open(file_path, 'w', encoding='windows-1251') as f:
         json.dump(json_file, f, ensure_ascii=False, indent=4)
+
+

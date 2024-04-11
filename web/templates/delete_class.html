@@ -6,6 +6,26 @@
     <link rel="stylesheet" type="text/css" href="../static/styles/edit_class.css">
 </head>
 <body>
+    <div class="Container">
+
+        <form action="/delete_class" method="post" name="delete">
+            {{ combox | safe }}
+            <button type="submit" class="BTN"> Удалить класс </button>
+        </form>
+
+        <div class="InnerContainer">
+            <div class="_Back">
+                <a href='/edit_class'>
+                    <button class="Exit"> Назад </button>
+                </a>
+            </div>
+            <div class="_Exit">
+                <a href='/'>
+                    <button class="Exit"> Главное меню </button>
+                </a>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
