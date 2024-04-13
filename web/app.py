@@ -1,8 +1,8 @@
 import json
 import os
 
-from flask import Flask, render_template, request, redirect
-from data_processing import get_combox_values, remove_class_from_json, change_class_name
+from flask import Flask, render_template, request, redirect, url_for
+from data_processing import get_combox_values, remove_class_from_json, change_class_name, fix_data_ranges, classificate
 
 app = Flask(__name__)
 
@@ -27,17 +27,37 @@ def classification():
     return render_template("classification.html", table_html=table_html)
 
 
-@app.route('/classify')
-def classify():
-    return render_template('classify.html')
-
-
-@app.route('/classify', methods=['GET', 'POST'])
+@app.route('/classification', methods=['GET', 'POST'])
 def classify_post():
     with open('../datatypes.json', 'r') as file:
         data_frame = json.load(file)
 
-    return render_template('classify.html')
+    values = []
+
+    for key in data_frame.keys():
+        temp = (key.lower()).replace(" ", "")
+        values.append(request.form[temp])
+
+    return redirect(url_for('classify', values=values))
+
+
+@app.route('/classify')
+def classify():
+    values = request.args.getlist('values')
+    temp = []
+    for item in values:
+        try:
+            temp.append(int(item))
+        except ValueError:
+            temp.append(item)
+
+    with open('../data_knowledge.json', 'r') as file:
+        data = json.load(file)
+    classes_info = data.get('Классы')
+    year, sort, place, nominal, size, save, leveling, sticker, perforation, marking, circulation, water_mark, history, issue = temp
+    res = classificate(year, sort, place, nominal, size, save, leveling, sticker, perforation, marking, circulation, water_mark, history, issue, classes_info)
+
+    return render_template('classify.html', values=res)
 
 
 @app.route('/base_editor')
@@ -63,7 +83,6 @@ def delete_class():
 @app.route('/delete_class', methods=['GET', 'POST'])
 def delete_class_post():
     del_classes = request.form['del_classes']
-    print(del_classes)
     remove_class_from_json(del_classes, '../data_knowledge.json')
     combox = generate_class_combox()
     return render_template('delete_class.html', combox=combox)
@@ -148,18 +167,19 @@ def generate_table_html(data_types):
         html += '<tr>\n<td>{}</td>\n'.format(key)
         if value == 'Интервальный':
             html += '<td>Интервальный</td>\n'
-            html += '<td><input type="number" name="{}" placeholder="Введите значение" min="0" max="360" step="1"></td>\n'.format(
+            html += '<td><input type="number" name="{}" placeholder="Введите значение" min="0" max="2024" step="1"></td>\n'.format(
                 key.lower().replace(' ', ''))
         elif value == 'Логический':
             html += '<td>Логический</td>\n'
-            html += '<td><input type="checkbox" name="{}" value="Да"> Да</td>\n'.format(key.lower().replace(' ', ''))
+            html += '<td><select name="{}">'.format(key.lower().replace(' ', ''))
+            for item in ['Да', 'Нет']:
+                html += '<option value="{}">{}</option>'.format(item, item)
+            html += '</select></td>\n'
         elif value == 'Качественный':
             html += '<td>Качественный</td>\n'
             html += '<td><select name="{}">'.format(key.lower().replace(' ', ''))
 
             values = get_combox_values(key, '../data_knowledge.json')
-            if key == 'Размер марки':
-                print(values)
             for item in values:
                 html += '<option value="{}">{}</option>'.format(item, item)
             html += '</select></td>\n'

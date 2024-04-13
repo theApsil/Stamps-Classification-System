@@ -9,11 +9,13 @@
     <div class="Container">
         <p class="Title">Результаты классификации</p>
         <div class="Inner2Container">
+            Подходящие классы:
             <div class="TextContainer">
-                A
+                {{values[0] | safe}}
             </div>
+            Объяснение:
             <div class="TextContainer">
-                B
+                {{values[1] | safe}}
             </div>
         </div>
         <div class="InnerContainer">
