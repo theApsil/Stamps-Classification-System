@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактор базы признаков</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles/edit_class.css">
+</head>
+<body>
+    <p class="Title"> примечание: Данный признак удалится из ВСЕХ классов</p>
+    <div class="Container">
+        <form action="/delete_attr" method="post" name="del">
+            <p align='center'>Выберите признак для удаления</p>
+            {{ combox | safe }}
+            <button type="submit" class="BTN"> Удалить признак </button>
+        </form>
+
+        <div class="InnerContainer">
+            <div class="_Back">
+                <a href='/attributes_add'>
+                    <button class="Exit"> Назад </button>
+                </a>
+            </div>
+            <div class="_Exit">
+                <a href='/'>
+                    <button class="Exit"> Главное меню </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

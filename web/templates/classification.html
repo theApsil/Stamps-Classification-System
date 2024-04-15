@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Классификация</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles/classification.css">
+</head>
+<body>
+    <div class="Container">
+
+        <p class="Title">Система классификации марок</p>
+<!--        {{ table_html | safe}}-->
+<!--            <button type="submit" class="BTN">-->
+<!--                    Классифицировать-->
+<!--            </button>-->
+        <form action="/classification" method="post" name="classify">
+            {{ table_html | safe}}
+            <button type="submit" class="BTN">
+                    Классифицировать
+            </button>
+        </form>
+
+
+        <div class="InnerContainer">
+            <div class="_Back">
+                <a href='/'>
+                    <button class="Exit"> Назад </button>
+                </a>
+            </div>
+            <div class="_Exit">
+                <a href='/'>
+                    <button class="Exit"> Главное меню </button>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

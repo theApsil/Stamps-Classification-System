@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование базы знаний</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles/classification.css">
+</head>
+<body>
+
+<div class="Container">
+
+        <p class="Title"> Выбран класс {{_class | safe}}</p>
+        <p class="Title"> Выбран признак {{_attr | safe}} ({{_attr_type | safe}})</p>
+        <form action="/change_data_value" method="post" name="change_attr_value">
+            <input type="text" name="new_attr_value" placeholder="Введите новое значение">
+            <button type="submit" class="BTN"> Подтвердить </button>
+        </form>
+        <div class="InnerContainer">
+            <div class="_Back">
+                <a href='/change_attr_values'>
+                    <button class="Exit"> Назад </button>
+                </a>
+            </div>
+            <div class="_Exit">
+                <a href='/'>
+                    <button class="Exit"> Главное меню </button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

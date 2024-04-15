@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты классификации</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles/classify.css">
+</head>
+<body>
+    <div class="Container">
+        <p class="Title">Результаты классификации</p>
+        <div class="Inner2Container">
+            Подходящие классы:
+            <div class="TextContainer">
+                {{values[0] | safe}}
+            </div>
+            Объяснение:
+            <div class="TextContainer">
+                {{values[1] | safe}}
+            </div>
+        </div>
+        <div class="InnerContainer">
+        <div class="_Back">
+            <a href='/classification'>
+                <button class="Exit"> Назад </button>
+            </a>
+        </div>
+        <div class="_Exit">
+            <a href='/'>
+                <button class="Exit"> Главное меню </button>
+            </a>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

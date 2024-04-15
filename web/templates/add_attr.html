@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактор базы знаний</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles/edit_class.css">
+</head>
+<body>
+    <div class="Container">
+        <div class="Inner2Container">
+                <form action="/add_attr" method="post" name="add_attr">
+                    <p align='center'>Введите данные атрибута</p>
+                    <input type="text" name="attr_name" placeholder="Введите название">
+                    {{ combox | safe }}
+                    <button type="submit" class="BTN"> Добавить признак </button>
+                </form>
+        </div>
+
+        <div class="InnerContainer">
+            <div class="_Back">
+                <a href='/attributes_base'>
+                    <button class="Exit"> Назад </button>
+                </a>
+            </div>
+            <div class="_Exit">
+                <a href='/'>
+                    <button class="Exit"> Главное меню </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

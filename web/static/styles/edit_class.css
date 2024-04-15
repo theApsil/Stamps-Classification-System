@@ -1,0 +1,57 @@
+.InnerContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.Inner2Container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.Text {
+    padding-bottom: 20px;
+}
+
+.Container {
+    background-color: #d2d2d2;
+    margin: 50px;
+    width: 60%;
+    padding: 10px;
+}
+
+.FirstColumn {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.Title {
+    padding-bottom: 20px;
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.SecondColumn {
+    /*width: 100%;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.BTN {
+    padding: 10px;
+    background-color: #ffcd63;
+    border-color: gray;
+    margin-bottom: 5px;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Признаки класса</title>
+    <link rel="stylesheet" type="text/css" href="../static/styles/classification.css">
+</head>
+<body>
+    <div class="Container">
+        <form action="/attributes" method="post" name="show_table">
+            {{ combox | safe }}
+            {{ table_html | safe }}
+            <button type="submit" class="BTN"> Показать признаки класса </button>
+        </form>
+
+
+        <div class="InnerContainer">
+            <div class="_Back">
+                <a href='/base_editor'>
+                    <button class="Exit"> Назад </button>
+                </a>
+            </div>
+            <div class="_Exit">
+                <a href='/'>
+                    <button class="Exit"> Главное меню </button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
