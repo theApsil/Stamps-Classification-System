@@ -1,10 +1,12 @@
 import json
 import os
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from data_processing import get_combox_values, remove_class_from_json, change_class_name, fix_data_ranges, classificate
+from data_processing import add_class as add
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
 @app.route('/')
@@ -55,7 +57,8 @@ def classify():
         data = json.load(file)
     classes_info = data.get('Классы')
     year, sort, place, nominal, size, save, leveling, sticker, perforation, marking, circulation, water_mark, history, issue = temp
-    res = classificate(year, sort, place, nominal, size, save, leveling, sticker, perforation, marking, circulation, water_mark, history, issue, classes_info)
+    res = classificate(year, sort, place, nominal, size, save, leveling, sticker, perforation, marking, circulation,
+                       water_mark, history, issue, classes_info)
 
     return render_template('classify.html', values=res)
 
@@ -122,6 +125,56 @@ def change_attr_values():
     return render_template('change_attr_values.html')
 
 
+@app.route('/add_class')
+def add_class():
+    return render_template('add_class.html')
+
+
+@app.route('/add_class', methods=['GET', 'POST'])
+def add_class_post():
+    class_name = request.form['add_class']
+
+    with open('../datatypes.json', 'r') as f:
+        data = json.load(f)
+    table = generate_table_new_class(data)
+    return redirect(url_for('add_class_fields', class_name=class_name, table=table))
+
+
+@app.route('/add_class_fields')
+def add_class_fields():
+    table = request.args.get('table')
+    _class = request.args.get('class_name')
+    session['class_name'] = _class
+    print(_class)
+    return render_template('add_class_fields.html', table=table, class_name=_class)
+
+
+@app.route('/add_class_fields', methods=['GET', 'POST'])
+def add_class_fields_post():
+    _class = session.get('class_name')
+    with open('../datatypes.json', 'r') as file:
+        data_frame = json.load(file)
+
+    values = []
+
+    for key in data_frame.keys():
+        temp = (key.lower()).replace(" ", "")
+        values.append(request.form[temp])
+
+    add(_class, values, '../data_knowledge.json')
+    return render_template('add_success.html', class_name=_class)
+
+
+@app.route('/attributes_add')
+def attributes_add():
+    return render_template('attributes_add.html')
+
+
+@app.route('/attributes_base')
+def attributes_base():
+    return render_template('attributes_base.html')
+
+
 def generate_class_combox():
     with open('../data_knowledge.json', 'r') as file:
         data = json.load(file)
@@ -157,6 +210,28 @@ def generate_class_table(classes):
     html = '<table align="center">\n<thead>\n<tr>\n<th> Классы </th></tr>\n</thead>\n<tbody>\n'
     for key in classes.keys():
         html += '<tr>\n<td>{}</td>\n'.format(key)
+    html += '</tbody>\n</table>\n'
+    return html
+
+
+def generate_table_new_class(data_types):
+    html = '<table align="center">\n<thead>\n<tr>\n<th>Признак</th>\n<th>Тип данных</th>\n<th>Значение</th>\n</tr>\n</thead>\n<tbody>\n'
+    for key, value in data_types.items():
+        html += '<tr>\n<td>{}</td>\n'.format(key)
+        if value == 'Интервальный':
+            html += '<td>Интервальный</td>\n'
+            html += '<td><input type="text" name="{}" placeholder="1 .. 100"></td>\n'.format(
+                key.lower().replace(' ', ''))
+        elif value == 'Логический':
+            html += '<td>Логический</td>\n'
+            html += '<td><input type="text" name="{}" placeholder="Да, Нет"></td>\n'.format(
+                key.lower().replace(' ', ''))
+
+        elif value == 'Качественный':
+            html += '<td>Качественный (через запятую)</td>\n'
+            html += '<td><input type="text" name="{}" placeholder="офсетная бумага, склеенная бумага"></td>\n'.format(
+                key.lower().replace(' ', ''))
+        html += '</tr>\n'
     html += '</tbody>\n</table>\n'
     return html
 
