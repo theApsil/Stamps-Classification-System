@@ -2,7 +2,8 @@ import json
 import os
 
 from flask import Flask, render_template, request, redirect, url_for, session
-from data_processing import get_combox_values, remove_class_from_json, change_class_name, fix_data_ranges, classificate
+from data_processing import get_combox_values, remove_class_from_json, change_class_name, fix_data_ranges, classificate, \
+    delete_attribute
 from data_processing import add_class as add
 
 app = Flask(__name__)
@@ -173,6 +174,42 @@ def attributes_add():
 @app.route('/attributes_base')
 def attributes_base():
     return render_template('attributes_base.html')
+
+
+@app.route('/delete_attr')
+def delete_attr():
+    combox = generate_attr_combox()
+    return render_template('delete_attr.html', combox=combox)
+
+
+@app.route('/delete_attr', methods=['GET', 'POST'])
+def delete_attr_post():
+
+    value = request.form['del_attr']
+    with open('../data_knowledge.json', 'r') as file:
+        data = json.load(file)
+    delete_attribute(value, data, 'D:\StudyProjects\SCS\web\data_processing\data.json')
+
+    with open('../datatypes.json', 'r') as file:
+        data = json.load(file)
+        del data[value]
+
+    with open('../datatypes.json', 'w') as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)
+    combox = generate_attr_combox()
+    return render_template('delete_attr.html', combox=combox)
+
+
+def generate_attr_combox():
+    with open('../datatypes.json', 'r') as file:
+        data = json.load(file)
+
+    html = '<select name="del_attr">\n'
+    for key in data.keys():
+        html += '<option value="{}">{}</option>\n'.format(key, key)
+    html += '</select>\n'
+
+    return html
 
 
 def generate_class_combox():
