@@ -2,20 +2,19 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Признаки класса</title>
+    <title>Редактирование базы знаний</title>
     <link rel="stylesheet" type="text/css" href="../static/styles/classification.css">
 </head>
 <body>
     <div class="Container">
-        <form action="/change_attr_values" method="post" name="choose_class">
+        <p class="Title"> Выбран класс {{_class | safe}}</p>
+        <form action='/choose_attr' method="post" name="choose_attr">
             {{ combox | safe }}
-            <button type="submit" class="BTN"> Выбрать класс </button>
+            <button type="submit" class="BTN"> Выбрать признак </button>
         </form>
-
-
         <div class="InnerContainer">
             <div class="_Back">
-                <a href='/attributes_add'>
+                <a href='/change_attr_values'>
                     <button class="Exit"> Назад </button>
                 </a>
             </div>
@@ -26,5 +25,6 @@
             </div>
         </div>
     </div>
+
 </body>
 </html>

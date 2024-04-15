@@ -3,7 +3,7 @@ import os
 
 from flask import Flask, render_template, request, redirect, url_for, session
 from data_processing import get_combox_values, remove_class_from_json, change_class_name, fix_data_ranges, classificate, \
-    delete_attribute
+    delete_attribute, change_attribute_value
 from data_processing import add_class as add
 
 app = Flask(__name__)
@@ -123,7 +123,57 @@ def attributes_table():
 
 @app.route('/change_attr_values')
 def change_attr_values():
-    return render_template('change_attr_values.html')
+    class_combox = generate_class_combox()
+    return render_template('change_attr_values.html', combox=class_combox)
+
+
+@app.route('/choose_attr')
+def choose_attr():
+    _class = session.get('class_name')
+    combox = generate_attr_combox('keys')
+    return render_template('choose_attr.html', _class=_class, combox=combox)
+
+@app.route('/choose_attr', methods=['GET', 'POST'])
+def choose_attr_values():
+    _class = session.get('class_name')
+    _attr = request.form['del_attr']
+    session['attribute'] = _attr
+    return redirect(url_for('change_data_value', _class=_class, _attr=_attr))
+
+
+@app.route('/change_data_value')
+def change_data_value():
+    _class = session.get('class_name')
+    _attr = session.get('attribute')
+
+    with open('../datatypes.json', 'r') as file:
+        data = json.load(file)
+    _attr_type = data[_attr]
+    session['attr_type'] = _attr_type
+    return render_template('change_data_value.html', _class=_class, _attr=_attr, _attr_type=_attr_type)
+
+
+@app.route('/change_data_value', methods=['GET', 'POST'])
+def change_data_value_post():
+    _class = session.get('class_name')
+    _attr = session.get('attribute')
+    _attr_type = session.get('attr_type')
+    value = request.form['new_attr_value']
+
+    with open('../data_knowledge.json', 'r') as file:
+        data = json.load(file)
+
+    change_attribute_value(_class, _attr, _attr_type, value, data, '../data_knowledge.json')
+
+    table_html = generate_table_from_class(_class)
+    return render_template('attribute_table.html', table_html=table_html)
+
+
+@app.route('/change_attr_values', methods=['GET', 'POST'])
+def change_attr_values_post():
+    _class = request.form['del_classes']
+    session['class_name'] = _class
+    return redirect(url_for('choose_attr', _class=_class))
 
 
 @app.route('/add_class')
@@ -146,7 +196,7 @@ def add_class_fields():
     table = request.args.get('table')
     _class = request.args.get('class_name')
     session['class_name'] = _class
-    print(_class)
+
     return render_template('add_class_fields.html', table=table, class_name=_class)
 
 
@@ -178,13 +228,12 @@ def attributes_base():
 
 @app.route('/delete_attr')
 def delete_attr():
-    combox = generate_attr_combox()
+    combox = generate_attr_combox('keys')
     return render_template('delete_attr.html', combox=combox)
 
 
 @app.route('/delete_attr', methods=['GET', 'POST'])
 def delete_attr_post():
-
     value = request.form['del_attr']
     with open('../data_knowledge.json', 'r') as file:
         data = json.load(file)
@@ -196,17 +245,43 @@ def delete_attr_post():
 
     with open('../datatypes.json', 'w') as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
-    combox = generate_attr_combox()
+    combox = generate_attr_combox('keys')
     return render_template('delete_attr.html', combox=combox)
 
 
-def generate_attr_combox():
+@app.route('/add_attr')
+def add_attr():
+    combox = generate_attr_combox('types')
+    return render_template('add_attr.html', combox=combox)
+
+
+@app.route('/add_attr', methods=['GET', 'POST'])
+def add_attr_post():
+    _class = request.form['attr_name']
+    _value = request.form['del_attr']
+
+    with open('../datatypes.json', 'r') as file:
+        data = json.load(file)
+    data[_class] = _value
+    with open('../datatypes.json', 'w') as file:
+        json.dump(data, file, indent=4, ensure_ascii=False)
+    combox = generate_attr_combox('types')
+    return render_template('add_attr.html', combox=combox)
+
+
+def generate_attr_combox(option):
     with open('../datatypes.json', 'r') as file:
         data = json.load(file)
 
     html = '<select name="del_attr">\n'
-    for key in data.keys():
-        html += '<option value="{}">{}</option>\n'.format(key, key)
+    if option == 'keys':
+        for key in data.keys():
+            html += '<option value="{}">{}</option>\n'.format(key, key)
+    if option == 'types':
+        temp = set(data.values())
+        for value in temp:
+            html += '<option value="{}">{}</option>\n'.format(value, value)
+
     html += '</select>\n'
 
     return html
